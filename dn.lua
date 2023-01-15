@@ -1,5 +1,5 @@
-function library:New(name)
-	local menu = {}
+print('loading lib...')
+        local menu = {}
 	local floppa = Instance.new("ScreenGui")
 	local Menu = Instance.new("ImageLabel")
 	local TextLabel = Instance.new("TextLabel")
