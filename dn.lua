@@ -1,4 +1,4 @@
-   -- UI funcs and tables
+do -- UI funcs and tables
     local Menu = {}
     local KeyBindList = {}
     local UILibrary = {}
@@ -5463,3 +5463,138 @@
     Library = {["UI"] = UILibrary, ["Menu"] = Menu, ["Accents"] = UIAccents, ["Subsections"] = SubSections, ["KeyBindList"] = KeyBindList, ["Signal"] = Signal, ["Utilities"] = UIUtilities}
 end
 -- MAIN CHEAT HERE
+setfpscap(0)
+--Credits :
+    --[[
+        ANCHOR Credits
+        Invaded = Main coding
+        Integer = Im fucking useless (cumhaxx kid)
+        Gas     = exploit man
+    ]]
+
+    --[[
+        ANCHOR Note
+        The entire script will be module-based.
+        Example : ragebot = {} and everything about ragebot will be contained there.
+
+        Invaded please ask me if you're gonna add new stuff, cuz i might be able to optimize them first (even though its a bad practice don't care fuck you).
+        Few notes :
+        1. UI library will be seperated from the main script.
+        2. Esp will be connected to heartbeat.
+        3. If you want to add something, do stuff seperately and then tell me to merge it.
+        4. In order to anticipate synapse v3's release and the fact that this will (i hope :>) support scriptware, we dont need to cache functions :D (luau optimizations).
+        5. I can take my hrts at any time during the development of this cheat (Invaded#5143)
+    ]]
+
+--ANCHOR Defining start tick
+
+local cheatLoadingStartTick = os.clock()
+
+local tick = tick
+local env = getgenv()
+if env.Hack then return end
+
+--ANCHOR Game loading waiting
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+if game.ReplicatedFirst:FindFirstChild("Session") then
+    game.ReplicatedFirst.Session:Destroy()
+end
+if game.Players.localPlayer.PlayerScripts:FindFirstChild("scapter") then
+    game.Players.localPlayer.PlayerScripts.scapter:Destroy()
+end
+-- mooooooom i bypassed my first anti cheat
+
+
+-- Identifiy our executor
+local executor = syn and "Synapse" or nil
+local platform = "Windows"
+if not executor then
+    executor, platform = identifyexecutor()
+end
+
+--ANCHOR Uilib (hi invaded)
+
+
+local Library
+-- SUS HAAH AMONG US US US HAHA LAST YEAR HAHAAH 202402402402402024 2024= = l AST YEAR LOOO L OLO !L! !L!L L!L!
+env.Hack = Library
+local spring = loadstring(game:HttpGet("https://raw.githubusercontent.com/Quenty/NevermoreEngine/5a429e871d54646ba54011c18321e77afa76d657/Modules/Shared/Physics/Spring.lua"))()
+
+local Menu = Library.Menu
+local UILibrary = Library.UI    
+
+local particleImages = {["Star"] = "rbxassetid://5946093983", ["Lightning"] = "rbxassetid://882168791", ["Flash"] = "rbxassetid://6673021984", ["Ring"] = "rbxassetid://6900421398"}
+local particleImagesDropDown = {}
+for i, v in next, particleImages do
+    particleImagesDropDown[1 + #particleImagesDropDown] = i
+end
+
+local forcefieldAnimations = {["Off"] = "rbxassetid://0",["Web"] = "rbxassetid://301464986",["Scan"] = "rbxassetid://5843010904",["Swirl"] = "rbxassetid://8133639623",["Checkerboard"] = "rbxassetid://5790215150",["Christmas"] = "rbxassetid://6853532738",["Player"] = "rbxassetid://4494641460",["Shield"] = "rbxassetid://361073795",["Dots"] = "rbxassetid://5830615971",["Bubbles"] = "rbxassetid://1461576423",["Matrix"] = "rbxassetid://10713189068",["Groove"] = "rbxassetid://10785404176",["Cloud"] = "rbxassetid://5176277457",["Sky"] = "rbxassetid://1494603972",["Smudge"] = "rbxassetid://6096634060",["Scrapes"] = "rbxassetid://6248583558",["Galaxy"] = "rbxassetid://1120738433",["Stars"] = "rbxassetid://598201818",["Rainbow"] = "rbxassetid://10037165803", ["Triangular"]="rbxassetid://4504368932", ["Wall"] = "rbxassetid://4271279"}
+local forcefieldAnimationsDropDown = {}
+for i, v in next, forcefieldAnimations do
+    forcefieldAnimationsDropDown[1 + #forcefieldAnimationsDropDown] = i
+end
+
+local Themes = {
+    default = {
+        FullWhite = Color3.fromRGB(255, 255, 255),
+        ColorA = Color3.fromRGB(36, 36, 36),
+        ColorB = Color3.fromRGB(0, 0, 0),
+        ColorC = Color3.fromRGB(20, 20, 20),
+        ColorD = Color3.fromRGB(50, 50, 50),
+        ColorE = Color3.fromRGB(30, 30, 30),
+        ColorF = Color3.fromRGB(20, 20, 20),
+        ColorG = Color3.fromRGB(10, 10, 10),
+        ColorH = Color3.fromRGB(32, 32, 32),
+        ColorI = Color3.fromRGB(40, 40, 40),
+        Accent = Color3.fromRGB(127, 72, 163)
+    },
+    kfcsenze = { -- i was kinda bored lol
+        FullWhite = Color3.fromRGB(220, 220, 220),
+        ColorA = Color3.fromRGB(4, 1, 11),
+        ColorB = Color3.fromRGB(28, 28, 28),
+        ColorC = Color3.fromRGB(15, 15, 15),
+        ColorD = Color3.fromRGB(32, 32, 32),
+        ColorE = Color3.fromRGB(10, 10, 10),
+        ColorF = Color3.fromRGB(20, 20, 20),
+        ColorG = Color3.fromRGB(8, 2, 22),
+        ColorH = Color3.fromRGB(16, 4, 44),
+        ColorI = Color3.fromRGB(28, 28, 28),
+        Accent = Color3.fromRGB(163, 254, 226)
+    },
+}
+local MenuParameters = {
+    Tabs = {
+        "Legit",
+        "Rage",
+        "ESP",
+        "Visuals", 
+        "Misc",
+        "Settings"  
+    },
+    CheatName = "bloxhaxx",
+    UserType = env.login and env.login.username or "dev",
+    UIcolors = Themes.default,
+    TextFont = {
+        CheatTextSize = 16,
+        TabTextSize = 16,
+        TxtSize = 16,
+        Font = Enum.Font.TitilliumWeb,
+    },
+    HeaderFont = {
+        WatermarkTxtSize = 13,
+        Font = Enum.Font.TitilliumWeb,
+    },
+}
+
+UILibrary:Start(MenuParameters)
+
+local function getconfigs()
+    local cfgs = {}
+    for i, v in next, (listfiles("bloxsense/bloxsense_configs")) do
+        cfgs[1 + #cfgs] = string.sub(v, 29, 256):sub(0, -5) -- remove the "bloxsense/bloxsense_configs" and the ".cfg"
+    end
+    return cfgs
+end
