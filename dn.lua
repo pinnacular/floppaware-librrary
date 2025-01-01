@@ -1,3 +1,54 @@
+setfpscap(0)
+--Credits :
+    --[[
+        ANCHOR Credits
+        Invaded = Main coding
+        Integer = Im fucking useless (cumhaxx kid)
+        Gas     = exploit man
+    ]]
+
+    --[[
+        ANCHOR Note
+        The entire script will be module-based.
+        Example : ragebot = {} and everything about ragebot will be contained there.
+
+        Invaded please ask me if you're gonna add new stuff, cuz i might be able to optimize them first (even though its a bad practice don't care fuck you).
+        Few notes :
+        1. UI library will be seperated from the main script.
+        2. Esp will be connected to heartbeat.
+        3. If you want to add something, do stuff seperately and then tell me to merge it.
+        4. In order to anticipate synapse v3's release and the fact that this will (i hope :>) support scriptware, we dont need to cache functions :D (luau optimizations).
+        5. I can take my hrts at any time during the development of this cheat (Invaded#5143)
+    ]]
+
+--ANCHOR Defining start tick
+
+local cheatLoadingStartTick = os.clock()
+
+local tick = tick
+local env = getgenv()
+if env.Hack then return end
+
+--ANCHOR Game loading waiting
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+if game.ReplicatedFirst:FindFirstChild("Session") then
+    game.ReplicatedFirst.Session:Destroy()
+end
+if game.Players.localPlayer.PlayerScripts:FindFirstChild("scapter") then
+    game.Players.localPlayer.PlayerScripts.scapter:Destroy()
+end
+-- mooooooom i bypassed my first anti cheat
+
+
+-- Identifiy our executor
+local executor = syn and "Synapse" or nil
+local platform = "Windows"
+if not executor then
+    executor, platform = identifyexecutor()
+end
+
 do -- UI funcs and tables
     local Menu = {}
     local KeyBindList = {}
@@ -5463,59 +5514,6 @@ do -- UI funcs and tables
     Library = {["UI"] = UILibrary, ["Menu"] = Menu, ["Accents"] = UIAccents, ["Subsections"] = SubSections, ["KeyBindList"] = KeyBindList, ["Signal"] = Signal, ["Utilities"] = UIUtilities}
 end
 -- MAIN CHEAT HERE
-setfpscap(0)
---Credits :
-    --[[
-        ANCHOR Credits
-        Invaded = Main coding
-        Integer = Im fucking useless (cumhaxx kid)
-        Gas     = exploit man
-    ]]
-
-    --[[
-        ANCHOR Note
-        The entire script will be module-based.
-        Example : ragebot = {} and everything about ragebot will be contained there.
-
-        Invaded please ask me if you're gonna add new stuff, cuz i might be able to optimize them first (even though its a bad practice don't care fuck you).
-        Few notes :
-        1. UI library will be seperated from the main script.
-        2. Esp will be connected to heartbeat.
-        3. If you want to add something, do stuff seperately and then tell me to merge it.
-        4. In order to anticipate synapse v3's release and the fact that this will (i hope :>) support scriptware, we dont need to cache functions :D (luau optimizations).
-        5. I can take my hrts at any time during the development of this cheat (Invaded#5143)
-    ]]
-
---ANCHOR Defining start tick
-
-local cheatLoadingStartTick = os.clock()
-
-local tick = tick
-local env = getgenv()
-if env.Hack then return end
-
---ANCHOR Game loading waiting
-if not game:IsLoaded() then
-    game.Loaded:Wait()
-end
-if game.ReplicatedFirst:FindFirstChild("Session") then
-    game.ReplicatedFirst.Session:Destroy()
-end
-if game.Players.localPlayer.PlayerScripts:FindFirstChild("scapter") then
-    game.Players.localPlayer.PlayerScripts.scapter:Destroy()
-end
--- mooooooom i bypassed my first anti cheat
-
-
--- Identifiy our executor
-local executor = syn and "Synapse" or nil
-local platform = "Windows"
-if not executor then
-    executor, platform = identifyexecutor()
-end
-
---ANCHOR Uilib (hi invaded)
-
 
 local Library
 -- SUS HAAH AMONG US US US HAHA LAST YEAR HAHAAH 202402402402402024 2024= = l AST YEAR LOOO L OLO !L! !L!L L!L!
