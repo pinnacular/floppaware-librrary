@@ -1,6 +1,4 @@
-do
-
-    -- UI funcs and tables
+   -- UI funcs and tables
     local Menu = {}
     local KeyBindList = {}
     local UILibrary = {}
