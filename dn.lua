@@ -3382,7 +3382,7 @@ do -- UI funcs and tables
             end
 
             local function getPlayerSpeed()
-                local character = game.Players.LocalPlayer.Character
+                local character = Players.LocalPlayer.Character
                 if character and character:FindFirstChild("HumanoidRootPart") then
                     return math.floor(character.HumanoidRootPart.Velocity.Magnitude)
                 end
